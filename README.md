@@ -3,7 +3,7 @@
 ### The Missing Evaluation Layer for Production RAG Systems
 
 <p align="left">
-  <img src="https://img.shields.io/pypi/v/rag-evaluation-framework?style=flat-square&color=blue" alt="PyPI" />
+  <!-- <img src="https://img.shields.io/pypi/v/rag-evaluation-framework?style=flat-square&color=blue" alt="PyPI" /> -->
   <img src="https://img.shields.io/badge/Python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white" />
   <img src="https://img.shields.io/badge/Tests-57%20passing-brightgreen?style=flat-square" />
   <img src="https://img.shields.io/badge/Benchmarks-passing-brightgreen?style=flat-square" />
