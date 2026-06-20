@@ -1,0 +1,24 @@
+{
+  "faithfulness": {
+    "decompose": "[\"The capital of France is Paris.\", \"Paris is in Europe.\"]",
+    "verify_supported": "SUPPORTED",
+    "verify_unsupported": "NOT_SUPPORTED"
+  },
+  "hallucination": {
+    "verify_grounded": "{\"grounded\": true, \"factual\": true, \"reason\": \"The claim is directly supported by the context.\"}",
+    "verify_not_grounded": "{\"grounded\": false, \"factual\": true, \"reason\": \"The claim is not found in the provided context.\"}"
+  },
+  "relevance": {
+    "high": "0.95",
+    "medium": "0.60",
+    "low": "0.20"
+  },
+  "coverage": {
+    "high": "0.90",
+    "medium": "0.55",
+    "low": "0.15"
+  },
+  "ucm": {
+    "claim_extraction": "[\"Paris is the capital of France.\"]"
+  }
+}

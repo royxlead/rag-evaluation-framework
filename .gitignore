@@ -1,0 +1,82 @@
+# ── Python ─────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+*.egg
+dist/
+build/
+*.whl
+.eggs/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# ── Environment & Secrets ─────────────────────────────────────
+.env
+.rag-evaluation-framework.env
+*.env.local
+
+# ── Testing & Coverage ─────────────────────────────────────────
+.pytest_cache/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+htmlcov/
+
+# ── Type checking ──────────────────────────────────────────────
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# ── Linting ────────────────────────────────────────────────────
+.ruff_cache/
+
+# ── Documentation ──────────────────────────────────────────────
+site/
+
+# ── Dashboard (Next.js) ────────────────────────────────────────
+dashboard/.next/
+dashboard/out/
+dashboard/node_modules/
+dashboard/.env.local
+dashboard/.env
+dashboard/next-env.d.ts
+
+# ── IDE & Editor ───────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ── Demo / Generated Reports ───────────────────────────────────
+demo_report.*
+rag_eval_report.*
+
+# ── Benchmarks (generated) ────────────────────────────────────
+benchmarks/benchmark_results.json
+benchmarks/real_benchmark_results.json
+
+# ── Database Migrations ────────────────────────────────────────
+migrations/versions/*.pyc
+
+# ── Operating System ───────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.log
+
+# Windows reserved device names (NUL, CON, PRN, AUX, etc.)
+nul
+con
+prn
+aux

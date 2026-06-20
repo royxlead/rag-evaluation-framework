@@ -1,0 +1,75 @@
+"""API key authentication for RAG Evaluation Framework API.
+
+Keys stored as bcrypt hashes. Key format: "reval_" + 32 random chars.
+"""
+
+from __future__ import annotations
+
+import os
+import secrets
+from datetime import datetime, timedelta, timezone
+from typing import Any, Optional
+
+from jose import JWTError, jwt
+from passlib.context import CryptContext
+from sqlalchemy.ext.asyncio import AsyncSession
+
+# Password hashing context
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+# JWT settings
+SECRET_KEY = os.environ.get("SECRET_KEY", secrets.token_hex(32))
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+
+def generate_api_key() -> str:
+    """Generate a new API key in format 'reval_' + 32 random chars."""
+    return "reval_" + secrets.token_hex(16)
+
+
+def hash_api_key(api_key: str) -> str:
+    """Hash an API key using bcrypt."""
+    return pwd_context.hash(api_key)
+
+
+def verify_api_key(plain_key: str, hashed_key: str) -> bool:
+    """Verify a plain API key against a bcrypt hash."""
+    return pwd_context.verify(plain_key, hashed_key)
+
+
+def create_access_token(data: dict[str, Any], expires_delta: timedelta | None = None) -> str:
+    """Create a JWT access token."""
+    to_encode = data.copy()
+    expire = datetime.now(timezone.utc) + (expires_delta or timedelta(minutes=15))
+    to_encode.update({"exp": expire})
+    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+
+
+def decode_access_token(token: str) -> dict[str, Any] | None:
+    """Decode and validate a JWT access token."""
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        return payload
+    except JWTError:
+        return None
+
+
+async def get_api_key_by_hash(db: AsyncSession, key_hash: str) -> Optional[dict]:
+    """Look up an API key by its hash."""
+    from sqlalchemy import select
+
+    from api.database import APIKey
+
+    result = await db.execute(
+        select(APIKey).where(APIKey.key_hash == key_hash, APIKey.is_active.is_(True))
+    )
+    row = result.scalar_one_or_none()
+    if row is None:
+        return None
+    return {
+        "id": str(row.id),
+        "name": row.name,
+        "rate_limit_per_hour": row.rate_limit_per_hour,
+        "request_count": row.request_count,
+    }

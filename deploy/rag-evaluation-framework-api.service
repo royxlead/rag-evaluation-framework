@@ -1,0 +1,18 @@
+[Unit]
+Description=RAG Evaluation Framework FastAPI Service
+After=network.target postgresql.service redis.service
+Wants=postgresql.service redis.service
+
+[Service]
+Type=exec
+User=rag-evaluation-framework
+WorkingDirectory=/opt/rag-evaluation-framework
+EnvironmentFile=/opt/rag-evaluation-framework/.env
+ExecStart=/opt/rag-evaluation-framework/venv/bin/uvicorn api.main:app --host 127.0.0.1 --port 8000 --workers 4
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

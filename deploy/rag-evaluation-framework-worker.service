@@ -1,0 +1,18 @@
+[Unit]
+Description=RAG Evaluation Framework Celery Worker
+After=network.target redis.service
+Wants=redis.service
+
+[Service]
+Type=exec
+User=rag-evaluation-framework
+WorkingDirectory=/opt/rag-evaluation-framework
+EnvironmentFile=/opt/rag-evaluation-framework/.env
+ExecStart=/opt/rag-evaluation-framework/venv/bin/celery -A api.tasks worker --loglevel=info --concurrency=4
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
